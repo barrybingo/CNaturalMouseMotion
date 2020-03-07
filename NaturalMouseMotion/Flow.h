@@ -61,9 +61,9 @@ private:
 	 * @param flowCharacteristics an array of values which describe how the mouse should move at each moment
 	 * @return the normalized bucket array
 	 */
-	FlowCharacteristicsContainer normalizeBuckets(FlowCharacteristicsContainer flowCharacteristics)
+	static FlowCharacteristicsContainer normalizeBuckets(FlowCharacteristicsContainer flowCharacteristics)
 	{
-		auto buckets = FlowCharacteristicsContainer(flowCharacteristics.size());
+		auto buk = FlowCharacteristicsContainer(flowCharacteristics.size());
 		double sum = 0;
 		for (auto &v : flowCharacteristics)
 		{
@@ -77,12 +77,12 @@ private:
 		{
 			throw std::runtime_error("Invalid FlowCharacteristics. All array elements can't be 0.");
 		}
-		auto multiplier = static_cast<double>(AVERAGE_BUCKET_VALUE) * buckets.size() / sum;
+		auto multiplier = static_cast<double>(AVERAGE_BUCKET_VALUE) * buk.size() / sum;
 		for (size_t i = 0; i < flowCharacteristics.size(); i++)
 		{
-			buckets[i] = flowCharacteristics[i] * multiplier;
+			buk[i] = flowCharacteristics[i] * multiplier;
 		}
-		return buckets;
+		return buk;
 	}
 
 	/**
