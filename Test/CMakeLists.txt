@@ -8,4 +8,10 @@ add_executable(${BINARY} ${TEST_SOURCES})
 
 add_test(NAME ${BINARY} COMMAND ${BINARY})
 
+if(MSVC)
+  target_compile_options(${CMAKE_PROJECT_NAME}_test PRIVATE /W4 /WX)
+else()
+  target_compile_options(${CMAKE_PROJECT_NAME}_test PRIVATE -Wall -Wextra -pedantic -Werror)
+endif()
+
 target_link_libraries(${BINARY} PUBLIC gtest)

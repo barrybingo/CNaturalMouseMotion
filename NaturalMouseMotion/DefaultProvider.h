@@ -74,7 +74,7 @@ struct DefaultOvershootManager : public OvershootManager
 	{
 	}
 
-	size_t getOvershoots(const Flow *flow, time_type mouseMovementMs, double distance) override
+	size_t getOvershoots(const Flow* /* flow */, time_type /* mouseMovementMs */, double distance) override
 	{
 		if (distance < minDistanceForOvershoots)
 		{
@@ -83,7 +83,7 @@ struct DefaultOvershootManager : public OvershootManager
 		return overshoots;
 	}
 
-	Point<int> getOvershootAmount(double distanceToRealTargetX, double distanceToRealTargetY, time_type mouseMovementMs, size_t overshootsRemaining) override
+	Point<int> getOvershootAmount(double distanceToRealTargetX, double distanceToRealTargetY, time_type /* mouseMovementMs */, size_t overshootsRemaining) override
 	{
 		auto distanceToRealTarget = std::hypot(distanceToRealTargetX, distanceToRealTargetY);
 		auto randomModifier = distanceToRealTarget / overshootRandomModifierDivider;
@@ -92,7 +92,7 @@ struct DefaultOvershootManager : public OvershootManager
 		return {x, y};
 	}
 
-	time_type deriveNextMouseMovementTimeMs(time_type mouseMovementMs, size_t overshootsRemaining) override
+	time_type deriveNextMouseMovementTimeMs(time_type mouseMovementMs, size_t /* overshootsRemaining */) override
 	{
 		return std::max(static_cast<time_type>((mouseMovementMs / overshootSpeedupDivider)), minOvershootMovementMs);
 	}
@@ -145,7 +145,7 @@ struct DefaultSpeedManager
 	/**
 	 * Get the SpeedFlow object, which contains Flow and planned time for mouse movement in ms.
 	 **/
-	std::pair<const Flow *, time_type> operator()(double distance) const
+	std::pair<const Flow *, time_type> operator()(double /* distance */) const
 	{
 		if (flows.empty())
 			return {nullptr, 0};
@@ -168,8 +168,8 @@ struct DefaultSpeedManager
 private:
 	static constexpr double SMALL_DELTA{1.0E-5};
 	std::vector<Flow> flows;
+	RandomZeroToOneFunc random;	
 	time_type mouseMovementTimeMs;
-	RandomZeroToOneFunc random;
 };
 
 /*

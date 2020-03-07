@@ -36,7 +36,7 @@ struct MockSystemCalls: public SystemCalls
     {
         return 0;
     }
-	void sleep(time_type time) override
+	void sleep(time_type /* time */) override
     {
         // do nothing
     }

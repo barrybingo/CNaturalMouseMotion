@@ -103,8 +103,8 @@ public:
 private:
 	int xDest;
 	int yDest;
+	MotionNature& nature;	
 	Dimension screenSize;
-	MotionNature& nature;
 
 	int limitByScreenWidth(int value)
 	{

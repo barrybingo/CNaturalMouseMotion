@@ -12,7 +12,7 @@ static constexpr int SCREEN_HEIGHT = 500;
 #define EXPECT_ARRAY_EQ(a, b) { \
     EXPECT_EQ(a.size(), b.size()); \
     size_t element_count = std::min(a.size(), b.size()); \
-    for(int i = 0; i < element_count; ++i) { EXPECT_NEAR(a[i], b[i], SMALL_DELTA); } \
+    for(size_t i = 0; i < element_count; ++i) { EXPECT_NEAR(a[i], b[i], SMALL_DELTA); } \
 } \
 
 
@@ -21,7 +21,7 @@ struct ConstantSpeedManager
 	ConstantSpeedManager(time_type time): time(time)
 	{}
 
-	std::pair<Flow *, time_type> operator()(double distance)
+	std::pair<Flow *, time_type> operator()(double /* distance */)
 	{
         return {&flow, time};
 	}
@@ -33,17 +33,17 @@ private:
 
 struct NoOvershootManager : public OvershootManager
 {
-	size_t getOvershoots(const Flow *flow, time_type mouseMovementMs, double distance) override
+	size_t getOvershoots(const Flow* /* flow */, time_type /* mouseMovementMs */, double /* distance */) override
 	{
 		return 0;
 	}
 
-	Point<int> getOvershootAmount(double distanceToRealTargetX, double distanceToRealTargetY, time_type mouseMovementMs, size_t overshootsRemaining) override
+	Point<int> getOvershootAmount(double /* distanceToRealTargetX */, double /* distanceToRealTargetY */, time_type /* mouseMovementMs */, size_t /* overshootsRemaining */) override
 	{
 		return {0, 0};
 	}
 
-	time_type deriveNextMouseMovementTimeMs(time_type mouseMovementMs, size_t overshootsRemaining) override
+	time_type deriveNextMouseMovementTimeMs(time_type /* mouseMovementMs */, size_t /* overshootsRemaining*/) override
 	{
 		return 0;
 	}
@@ -55,12 +55,12 @@ struct MultiOvershootManager : public OvershootManager
     MultiOvershootManager(std::list<Point<int>> points): points(points)
     {}
 
-	size_t getOvershoots(const Flow *flow, time_type mouseMovementMs, double distance) override
+	size_t getOvershoots(const Flow* /* flow */, time_type /* mouseMovementMs */, double /* distance */) override
 	{
 		return points.size();
 	}
 
-	Point<int> getOvershootAmount(double distanceToRealTargetX, double distanceToRealTargetY, time_type mouseMovementMs, size_t overshootsRemaining) override
+	Point<int> getOvershootAmount(double /* distanceToRealTargetX */, double /* distanceToRealTargetY */, time_type /* mouseMovementMs */, size_t /* overshootsRemaining */) override
 	{
         if (points.empty())
             return {0, 0};
@@ -72,7 +72,7 @@ struct MultiOvershootManager : public OvershootManager
         }
 	}
 
-	time_type deriveNextMouseMovementTimeMs(time_type mouseMovementMs, size_t overshootsRemaining) override
+	time_type deriveNextMouseMovementTimeMs(time_type mouseMovementMs, size_t /* overshootsRemaining */) override
 	{
 		return mouseMovementMs / 2;
 	}

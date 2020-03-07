@@ -32,8 +32,8 @@ struct FlowUtils
         {
             double index = (i * multiplier);
             double untilIndex = (i + 1) * multiplier;
-            int indexInt = (int)index;
-            int untilIndexInt = (int)untilIndex;
+            size_t indexInt = (size_t)index;
+            size_t untilIndexInt = (size_t)untilIndex;
             if (indexInt != untilIndexInt)
             {
                 double resultIndexPortion = 1 - (index - indexInt);
@@ -75,7 +75,7 @@ struct FlowUtils
             throw std::runtime_error("Target bucket length smaller than flow.");
         }
 
-        int tempLength = targetLength;
+        size_t tempLength = targetLength;
 
         if (flow.size() != 1 && (tempLength - flow.size()) % (flow.size() - 1) != 0)
         {
@@ -86,8 +86,8 @@ struct FlowUtils
         int insider = flow.size() - 2;
         int stepLength = (int)((tempLength - 2) / (double)(insider + 1)) + 1;
         int countToNextStep = stepLength;
-        int fillValueIndex = 0;
-        for (int i = 0; i < tempLength; i++)
+        size_t fillValueIndex = 0;
+        for (size_t i = 0; i < tempLength; i++)
         {
             double fillValueBottom = flow[fillValueIndex];
             double fillValueTop = fillValueIndex + 1 < flow.size() ? flow[fillValueIndex + 1] : flow[fillValueIndex];

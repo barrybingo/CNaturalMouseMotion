@@ -15,7 +15,7 @@ static constexpr double SMALL_DELTA = 10e-6;
 #define EXPECT_ARRAY_EQ(a, b) { \
     EXPECT_EQ(a.size(), b.size()); \
     size_t element_count = std::min(a.size(), b.size()); \
-    for(int i = 0; i < element_count; ++i) { EXPECT_NEAR(a[i], b[i], SMALL_DELTA); } \
+    for(size_t i = 0; i < element_count; ++i) { EXPECT_NEAR(a[i], b[i], SMALL_DELTA); } \
 } \
 
 double average(FlowCharacteristicsContainer v)
