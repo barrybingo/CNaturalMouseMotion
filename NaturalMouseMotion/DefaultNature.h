@@ -41,8 +41,6 @@ struct DefaultNature
                     FlowTemplates::stoppingFlow(),
                 },
                 nature.random)};
-
-        printf("size = %d\n", sizeof(nature.overshootManager));
         return nature;
     }
 
