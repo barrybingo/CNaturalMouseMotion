@@ -74,7 +74,7 @@ struct DefaultOvershootManager : public OvershootManager
 	{
 	}
 
-	size_t getOvershoots(const Flow* /* flow */, time_type /* mouseMovementMs */, double distance) override
+	int getOvershoots(const Flow* /* flow */, time_type /* mouseMovementMs */, double distance) override
 	{
 		if (distance < minDistanceForOvershoots)
 		{
@@ -83,7 +83,7 @@ struct DefaultOvershootManager : public OvershootManager
 		return overshoots;
 	}
 
-	Point<int> getOvershootAmount(double distanceToRealTargetX, double distanceToRealTargetY, time_type /* mouseMovementMs */, size_t overshootsRemaining) override
+	Point<int> getOvershootAmount(double distanceToRealTargetX, double distanceToRealTargetY, time_type /* mouseMovementMs */, int overshootsRemaining) override
 	{
 		auto distanceToRealTarget = std::hypot(distanceToRealTargetX, distanceToRealTargetY);
 		auto randomModifier = distanceToRealTarget / overshootRandomModifierDivider;
@@ -92,7 +92,7 @@ struct DefaultOvershootManager : public OvershootManager
 		return {x, y};
 	}
 
-	time_type deriveNextMouseMovementTimeMs(time_type mouseMovementMs, size_t /* overshootsRemaining */) override
+	time_type deriveNextMouseMovementTimeMs(time_type mouseMovementMs, int /* overshootsRemaining */) override
 	{
 		return std::max(static_cast<time_type>((mouseMovementMs / overshootSpeedupDivider)), minOvershootMovementMs);
 	}
@@ -101,13 +101,13 @@ struct DefaultOvershootManager : public OvershootManager
 	static constexpr int MIN_OVERSHOOT_MOVEMENT_MS{40};
 	static constexpr int OVERSHOOT_RANDOM_MODIFIER_DIVIDER{20};
 	static constexpr int MIN_DISTANCE_FOR_OVERSHOOTS{10};
-	static constexpr size_t DEFAULT_OVERSHOOT_AMOUNT{3};
+	static constexpr int DEFAULT_OVERSHOOT_AMOUNT{3};
 
 	time_type minOvershootMovementMs{MIN_OVERSHOOT_MOVEMENT_MS};
 	time_type minDistanceForOvershoots{MIN_DISTANCE_FOR_OVERSHOOTS};
 	double overshootRandomModifierDivider{OVERSHOOT_RANDOM_MODIFIER_DIVIDER};
 	double overshootSpeedupDivider{OVERSHOOT_SPEEDUP_DIVIDER};
-	size_t overshoots{DEFAULT_OVERSHOOT_AMOUNT};
+	int overshoots{DEFAULT_OVERSHOOT_AMOUNT};
 	RandomZeroToOneFunc random;
 };
 
@@ -168,7 +168,7 @@ struct DefaultSpeedManager
 private:
 	static constexpr double SMALL_DELTA{1.0E-5};
 	std::vector<Flow> flows;
-	RandomZeroToOneFunc random;	
+	RandomZeroToOneFunc random;
 	time_type mouseMovementTimeMs;
 };
 

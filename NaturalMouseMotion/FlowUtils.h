@@ -83,7 +83,7 @@ struct FlowUtils
         }
 
         FlowCharacteristicsContainer result(tempLength);
-        int insider = flow.size() - 2;
+        int insider = static_cast<int>(flow.size()) - 2;
         int stepLength = (int)((tempLength - 2) / (double)(insider + 1)) + 1;
         int countToNextStep = stepLength;
         size_t fillValueIndex = 0;

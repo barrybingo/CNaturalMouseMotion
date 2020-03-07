@@ -121,7 +121,7 @@ struct OvershootManager
 	 * @param distance the distance between mouse position and real target
 	 * @return the number of maximum overshoots used or 0 if no overshoots
 	 */
-	virtual size_t getOvershoots(const Flow *flow, time_type mouseMovementMs, double distance) = 0;
+	virtual int getOvershoots(const Flow *flow, time_type mouseMovementMs, double distance) = 0;
 
 	/**
 	 * Returns the overshoot amount which will be added to real target, thus getting the overshoot target.
@@ -132,7 +132,7 @@ struct OvershootManager
 	 * Values from (n to 1), where n &gt;= 1
 	 * @return the amount which will be added to real target, thus getting the overshoot target.
 	 */
-	virtual Point<int> getOvershootAmount(double distanceToRealTargetX, double distanceToRealTargetY, time_type mouseMovementMs, size_t overshootsRemaining) = 0;
+	virtual Point<int> getOvershootAmount(double distanceToRealTargetX, double distanceToRealTargetY, time_type mouseMovementMs, int overshootsRemaining) = 0;
 
 	/**
 	 * Once the mouse reaches the overshoot target, new trajectory with new speed is calculated for next target
@@ -142,7 +142,7 @@ struct OvershootManager
 	 * Values from (n to 0), where n &gt;= 0
 	 * @return the next mouse movement time in ms
 	 */
-	virtual time_type deriveNextMouseMovementTimeMs(time_type mouseMovementMs, size_t overshootsRemaining) = 0;
+	virtual time_type deriveNextMouseMovementTimeMs(time_type mouseMovementMs, int overshootsRemaining) = 0;
 };
 
 /**

@@ -33,17 +33,17 @@ private:
 
 struct NoOvershootManager : public OvershootManager
 {
-	size_t getOvershoots(const Flow* /* flow */, time_type /* mouseMovementMs */, double /* distance */) override
+	int getOvershoots(const Flow* /* flow */, time_type /* mouseMovementMs */, double /* distance */) override
 	{
 		return 0;
 	}
 
-	Point<int> getOvershootAmount(double /* distanceToRealTargetX */, double /* distanceToRealTargetY */, time_type /* mouseMovementMs */, size_t /* overshootsRemaining */) override
+	Point<int> getOvershootAmount(double /* distanceToRealTargetX */, double /* distanceToRealTargetY */, time_type /* mouseMovementMs */, int /* overshootsRemaining */) override
 	{
 		return {0, 0};
 	}
 
-	time_type deriveNextMouseMovementTimeMs(time_type /* mouseMovementMs */, size_t /* overshootsRemaining*/) override
+	time_type deriveNextMouseMovementTimeMs(time_type /* mouseMovementMs */, int /* overshootsRemaining*/) override
 	{
 		return 0;
 	}
@@ -55,12 +55,12 @@ struct MultiOvershootManager : public OvershootManager
     MultiOvershootManager(std::list<Point<int>> points): points(points)
     {}
 
-	size_t getOvershoots(const Flow* /* flow */, time_type /* mouseMovementMs */, double /* distance */) override
+	int getOvershoots(const Flow* /* flow */, time_type /* mouseMovementMs */, double /* distance */) override
 	{
-		return points.size();
+		return static_cast<int>(points.size());
 	}
 
-	Point<int> getOvershootAmount(double /* distanceToRealTargetX */, double /* distanceToRealTargetY */, time_type /* mouseMovementMs */, size_t /* overshootsRemaining */) override
+	Point<int> getOvershootAmount(double /* distanceToRealTargetX */, double /* distanceToRealTargetY */, time_type /* mouseMovementMs */, int /* overshootsRemaining */) override
 	{
         if (points.empty())
             return {0, 0};
@@ -72,7 +72,7 @@ struct MultiOvershootManager : public OvershootManager
         }
 	}
 
-	time_type deriveNextMouseMovementTimeMs(time_type mouseMovementMs, size_t /* overshootsRemaining */) override
+	time_type deriveNextMouseMovementTimeMs(time_type mouseMovementMs, int /* overshootsRemaining */) override
 	{
 		return mouseMovementMs / 2;
 	}
