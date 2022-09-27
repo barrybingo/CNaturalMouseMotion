@@ -245,7 +245,7 @@ struct DefaultSystemCalls : public SystemCalls
 	{
 		POINT pt;
 		GetCursorPos(&pt);
-		return {pt.y, pt.y};
+		return {pt.x, pt.y};
 	}
 #else
 	#error unsupported OS
